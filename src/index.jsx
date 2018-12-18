@@ -9,10 +9,12 @@ import styled from "styled-components"
 const Ul = styled.ul`
   padding: 0;
   position: relative;
+  background-color: #2d8fdd;
 `;
 const Li = styled.li`
   color: #2d8fdd;
   border-left: solid 6px #2d8fdd;
+  display: table-cell;
   background: #f1f8ff;
   margin-bottom: 3px;
   line-height: 1.5;
@@ -23,7 +25,6 @@ const Li = styled.li`
     color: #FFF;
   }
 `;
-
 ReactDOM.render(<BrowserRouter>
 				<div>
 				<Ul>

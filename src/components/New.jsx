@@ -73,15 +73,15 @@ class New extends React.Component {
 	}
 	render(){
 		return (
-				<Container>
-				<H3>title</H3>
-				<Input type="text" id="title" value={this.props.title} />
-				<H3>tags_string</H3>
-				<Input type="text" id="tags_string" value={this.props.tags_string} />
-				<H3>body</H3>
-				<Textarea id="body">{this.props.contents}</Textarea>
-				<p><Button onClick={() => this.postReport()}>送信</Button></p>
-				</Container>
+			<Container>
+			  <H3>title</H3>
+			  <Input type="text" id="title" value={this.props.title} />
+			  <H3>tags_string</H3>
+			  <Input type="text" id="tags_string" value={this.props.tags_string} />
+			  <H3>body</H3>
+			  <Textarea id="body">{this.props.contents}</Textarea>
+			  <p><Button onClick={() => this.postReport()}>送信</Button></p>
+			</Container>
 		);
 	}
 }

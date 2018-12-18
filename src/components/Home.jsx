@@ -2,6 +2,7 @@ import React from "react"
 import ReacDom from "react-dom"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import Card from "./Card"
 const Li = styled.li`
 
 `;
@@ -23,14 +24,15 @@ class Home extends React.Component{
 	}
 	render(){
 		console.log(this.state.reports);
-		let li = this.state.reports.map((report,i)=>{
-			return <li key={i}><Link to={"/" + report.blog_id}>{report.title}</Link></li>;
+		let cards = this.state.reports.map((report,i)=>{
+			return <Card key={i} {...report}></Card>;
 		});
-		console.log(li);
 		return (
 			<div>
 			  <ul>
-				{li}
+				<div>
+				  {cards}
+				</div>
 			  </ul>
 			</div>
 		)

@@ -1,7 +1,7 @@
 import React from "react"
 import ReacDom from "react-dom"
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 
 class Report extends React.Component {
 	constructor(){
@@ -32,6 +32,7 @@ class Report extends React.Component {
 			  <p>{this.state.title}</p>
 			  <p>{this.state.tags_string}</p>
 			  <p>{this.state.body}</p>
+			  <Link to="/">Home</Link>
 			</div>
 		)
 	}
