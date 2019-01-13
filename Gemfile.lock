@@ -6,6 +6,7 @@ GEM
     rack (2.0.6)
     rack-protection (2.0.4)
       rack
+    redcarpet (3.4.0)
     sequel (5.15.0)
     sinatra (2.0.4)
       mustermann (~> 1.0)
@@ -20,9 +21,10 @@ PLATFORMS
 
 DEPENDENCIES
   parseconfig
+  redcarpet
   sequel
   sinatra
   sqlite3
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
