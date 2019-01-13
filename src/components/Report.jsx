@@ -3,6 +3,7 @@ import ReacDom from "react-dom"
 import styled from "styled-components"
 import { Link, Redirect } from "react-router-dom"
 import hljs from 'highlight.js/lib/highlight';
+import Highlight from 'react-highlight'
 
 const COLOR = "#364e96";
 const H2 = styled.h2`
@@ -55,8 +56,9 @@ class Report extends React.Component {
 			  <H2>{this.state.title}</H2>
 			  <Tags>{this.state.tags_string}</Tags>
 			  <Body>
-				<div className="text" dangerouslySetInnerHTML={{__html: this.state.body}}>
-				</div>
+				<Highlight innerHTML={true}>
+				  {this.state.body}
+				</Highlight>
 			  </Body>
 			  <Link to="/">Home</Link>
 			</div>

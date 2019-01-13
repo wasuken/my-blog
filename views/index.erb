@@ -1,10 +1,15 @@
 <html>
   <head>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/default.min.css"/>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
 	<title><%= @title %></title>
   </head>
   <body>
 	<h2><%= @title %></h2>
 	<div id="app"></div>
   </body>
+  <script>
+	hljs.initHighlightingOnLoad();
+  </script>
   <script src="/js/bundle.js"></script>
 </html>

@@ -22,8 +22,10 @@ class MyBlog < Sinatra::Base
   def isPass(pass)
     pw = SecureRandom.hex(8)
     File.open("./.pass") do |file|
-      pw = file.read
+      pw = file.read.gsub(/\n/,"")
     end
+    p pw
+    p pass
     if pw == pass
       p "ok!"
     else

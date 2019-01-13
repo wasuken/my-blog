@@ -20,7 +20,7 @@ def getPass()
   pass=""
 
   File.open('./.pass') do |file|
-    pass=file.read
+    pass=file.read.gsub(/\n/,"")
   end
   pass
 end
