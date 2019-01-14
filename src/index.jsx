@@ -6,6 +6,7 @@ import Report from "./components/Report"
 import { BrowserRouter, Route, Link } from "react-router-dom"
 import styled from "styled-components"
 
+
 const Ul = styled.ul`
   padding: 0;
   position: relative;
@@ -25,16 +26,19 @@ const Li = styled.li`
     color: #FFF;
   }
 `;
-ReactDOM.render(<BrowserRouter>
-				<div>
-				<Ul>
-				<Li><Link to="/">Home</Link></Li>
-				<Li><Link to="/new">New</Link></Li>
-				</Ul>
-				<Route exact path="/" component={Home} />
-				<Route path="/:id" component={Report} />
-				<Route path="/edit/:id" component={New} />
-				<Route path="/new" component={New} />
-				</div>
-				</BrowserRouter>,
-				document.getElementById("app"));
+ReactDOM.render(
+	<div>
+	  <BrowserRouter>
+		<div>
+		  <Ul>
+			<Li><Link to="/">Home</Link></Li>
+			<Li><a href="https://twitter.com/black_box_rx?lang=ja">Twitter</a></Li>
+			<Li><a href="https://github.com/wasuken">Github</a></Li>
+		  </Ul>
+		  <Route exact path="/" component={Home} />
+		  <Route path="/:id" component={Report} />
+		  <Route path="/edit/:id" component={New} />
+		</div>
+	  </BrowserRouter>
+	</div>,
+	document.getElementById("app"));

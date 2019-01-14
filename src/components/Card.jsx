@@ -2,12 +2,14 @@ import React from "react"
 import ReacDom from "react-dom"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import Highlight from 'react-highlight'
 
 const WIDTH = 200;
 
 const Card_section = styled.section`
   float:left;
   width: ${WIDTH * 1.5}px;
+  height: 250px;
   border: medium solid #ff00ff;
   border-radius: 5px;
   box-shadow: 0 2px 5px #ccc;
@@ -20,6 +22,7 @@ const Card_img = styled.img`
 `;
 const Card_content = styled.div`
   width: ${WIDTH}px;
+  height: 100px
   display: block !important;
   margin: auto;
 `;
@@ -62,7 +65,9 @@ class Card extends React.Component{
 			  <Card_img src="/img/blog.jpg" alt="" />
 			  <Card_content>
 				<Card_title>{this.props.title}</Card_title>
-				<Card_text>{this.props.body.substring(0,20) + "..."}</Card_text>
+				<Card_text>
+				  {this.props.body.substring(0,20).replace(/<.*?>/g,"") + "..."}
+				</Card_text>
 			  </Card_content>
 			  <Card_link>
 				<Link to={"/" + this.props.blog_id}>この記事を見る</Link>

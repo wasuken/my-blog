@@ -2,7 +2,30 @@ import React from "react"
 import ReacDom from "react-dom"
 import styled from "styled-components"
 import { Link, Redirect } from "react-router-dom"
+import hljs from 'highlight.js/lib/highlight';
+import Highlight from 'react-highlight'
 
+const COLOR = "#364e96";
+const H2 = styled.h2`
+  color: ${COLOR};
+  padding: 0.5em 0;
+  border-top: solid 3px ${COLOR};
+  border-bottom: solid 3px ${COLOR};
+`;
+
+const Body = styled.div`
+  color: ${COLOR};
+  border: solid 3px ${COLOR};
+  padding: 0.5em;
+  border-radius: 0.5em;
+`;
+
+const Tags = styled.h3`
+  background: #dfefff;
+  box-shadow: 0px 0px 0px 5px #dfefff;
+  border: dashed 2px white;
+  padding: 0.2em 0.5em;
+`;
 class Report extends React.Component {
 	constructor(){
 		super();
@@ -27,11 +50,16 @@ class Report extends React.Component {
 			});
 	}
 	render(){
+		console.log(this.state.body)
 		return (
 			<div>
-			  <p>{this.state.title}</p>
-			  <p>{this.state.tags_string}</p>
-			  <p>{this.state.body}</p>
+			  <H2>{this.state.title}</H2>
+			  <Tags>{this.state.tags_string}</Tags>
+			  <Body>
+				<Highlight innerHTML={true}>
+				  {this.state.body}
+				</Highlight>
+			  </Body>
 			  <Link to="/">Home</Link>
 			</div>
 		)
