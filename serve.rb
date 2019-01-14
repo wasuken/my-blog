@@ -77,12 +77,13 @@ class MyBlog < Sinatra::Base
   end
   def isPass(pass)
     pw = CONFIG_PASS["pass"]
-    if pw == dec(pass)
+    result = pw == dec(pass)
+    if result
       p "ok!"
     else
       p "invalid pass"
     end
-    return pw == pass
+    return result
   end
   # wordcloud用
   get "/api/v1/wordcloud/:n" do

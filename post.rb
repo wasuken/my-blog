@@ -31,7 +31,7 @@ def post(fpath)
   title=""
   body=""
   pass=enc(PASSCONFIG["pass"])
-
+  p fpath
   File.open(fpath) do |file|
     title=File.basename(file.path,".md")
     body = file.read

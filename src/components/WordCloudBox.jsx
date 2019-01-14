@@ -32,6 +32,8 @@ class WordCloudBox extends React.Component{
 			  data={this.state.data}
 			  fontSizeMapper={fontSizeMapper}
 			  rotate={rotate}
+			  width={600}
+			  height={250}
 			  />
 		)
 	}

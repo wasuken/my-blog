@@ -3,6 +3,8 @@ import ReacDom from "react-dom"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import Card from "./Card"
+import WordCloudBox from "./WordCloudBox"
+
 const Li = styled.li`
 
 `;
@@ -23,10 +25,10 @@ class Home extends React.Component{
 		});
 	}
 	render(){
-		console.log(this.state.reports);
 		let cards = this.state.reports.map((report,i)=>{
 			return <Card key={i} {...report}></Card>;
 		});
+		cards.unshift(<WordCloudBox />);
 		return (
 			<div>
 			  <ul>

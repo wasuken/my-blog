@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import New  from "./components/New"
 import Home from "./components/Home"
 import Report from "./components/Report"
-import WordCloudBox from "./components/WordCloudBox"
 import { BrowserRouter, Route, Link } from "react-router-dom"
 import styled from "styled-components"
 
@@ -41,6 +40,5 @@ ReactDOM.render(
 		  <Route path="/edit/:id" component={New} />
 		</div>
 	  </BrowserRouter>
-	  <WordCloudBox />
 	</div>,
 	document.getElementById("app"));
