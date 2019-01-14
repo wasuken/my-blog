@@ -20,7 +20,6 @@ class WordCloudBox extends React.Component{
 				return resp.json();
 			})
 			.then((json) => {
-				console.log(json);
 				that.setState({
 					data: json
 				});

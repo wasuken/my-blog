@@ -41,7 +41,6 @@ class Report extends React.Component {
 				return resp.json();
 			})
 			.then((json) => {
-				console.log(json);
 				that.setState({
 					title: json.title,
 					body: json.body,
@@ -50,7 +49,6 @@ class Report extends React.Component {
 			});
 	}
 	render(){
-		console.log(this.state.body)
 		return (
 			<div>
 			  <H2>{this.state.title}</H2>

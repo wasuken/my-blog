@@ -60,15 +60,12 @@ class New extends React.Component {
 		let title = document.getElementById("title").value;
 		let tags_string = document.getElementById("tags_string").value;
 		let body = document.getElementById("body").value;
-		console.log(`title=${title}&tags_string=${tags_string}&body=${body}`);
 		fetch("http://localhost:4567/api/v1",{
 			method: "POST",
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
 			},
 			body: `title=${title}&tags_string=${tags_string}&body=${body}`
-		}).then((resp)=>{
-			console.log(resp);
 		});
 	}
 	render(){
