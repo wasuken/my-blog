@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import New  from "./components/New"
 import Home from "./components/Home"
 import Report from "./components/Report"
+import WordCloudBox from "./components/WordCloudBox"
 import { BrowserRouter, Route, Link } from "react-router-dom"
 import styled from "styled-components"
 
@@ -26,16 +27,20 @@ const Li = styled.li`
     color: #FFF;
   }
 `;
-ReactDOM.render(<BrowserRouter>
-				<div>
-				<Ul>
-				<Li><Link to="/">Home</Link></Li>
-				<Li><a href="https://twitter.com/black_box_rx?lang=ja">Twitter</a></Li>
-				<Li><a href="https://github.com/wasuken">Github</a></Li>
-				</Ul>
-				<Route exact path="/" component={Home} />
-				<Route path="/:id" component={Report} />
-				<Route path="/edit/:id" component={New} />
-				</div>
-				</BrowserRouter>,
-				document.getElementById("app"));
+ReactDOM.render(
+	<div>
+	  <BrowserRouter>
+		<div>
+		  <Ul>
+			<Li><Link to="/">Home</Link></Li>
+			<Li><a href="https://twitter.com/black_box_rx?lang=ja">Twitter</a></Li>
+			<Li><a href="https://github.com/wasuken">Github</a></Li>
+		  </Ul>
+		  <Route exact path="/" component={Home} />
+		  <Route path="/:id" component={Report} />
+		  <Route path="/edit/:id" component={New} />
+		</div>
+	  </BrowserRouter>
+	  <WordCloudBox />
+	</div>,
+	document.getElementById("app"));

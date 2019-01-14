@@ -3,46 +3,46 @@ require 'net/http'
 require 'date'
 require 'parseconfig'
 require 'uri'
+require 'openssl'
 
 CONFIG=ParseConfig.new('./post-config')
+PASSCONFIG=ParseConfig.new('./.pass')
 DIRPATH=CONFIG["default_path"]
 HOST=CONFIG["host"]
 
 def delete(id)
-  uri = URI.parse("#{HOST}/api/v1/#{id}?pass=#{getPass}")
+  uri = URI.parse("#{HOST}/api/v1/#{id}?pass=#{enc(PASSCONFIG["pass"])}")
   req = Net::HTTP::Delete.new(uri.request_uri)
   http = Net::HTTP.new(uri.host, uri.port)
   res = http.request(req)
 
   puts res.body
 end
-def getPass()
-  pass=""
 
-  File.open('./.pass') do |file|
-    pass=file.read.gsub(/\n/,"")
-  end
-  pass
+def enc(data)
+  enc = OpenSSL::Cipher.new('AES-256-CBC')
+  enc.encrypt
+  enc.key = PASSCONFIG["key"].chars.take(22).join + Date.today.strftime("%Y%m%d%H")
+  enc.iv = PASSCONFIG["iv"].chars.take(16).join
+  enc.update(data) + enc.final
 end
+
 def post(fpath)
   title=""
   body=""
-  pass=getPass
+  pass=enc(PASSCONFIG["pass"])
 
   File.open(fpath) do |file|
     title=File.basename(file.path,".md")
     body = file.read
   end
-
   res = Net::HTTP.post_form(URI.parse("#{HOST}/api/v1"),
                             {'title' => title,
                              'body' => body,
                              'tags_string' => "",
                              'pass' => pass})
   puts res.body
-
 end
-
 
 case ARGV[0]
 when "post" then
