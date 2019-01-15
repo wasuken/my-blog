@@ -3,5 +3,6 @@ vendor/
 *.db
 node_modules/
 public/js/**/*.*
+public/img/**/*.*
 .pass
 post-config

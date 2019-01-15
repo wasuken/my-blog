@@ -4,6 +4,24 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 
 */
 
+/*
+added my setting
+*/
+
+body{
+	background-image: url("/img/back2.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+svg g:hover{
+	animation: colorChange 1s ease forwards;
+}@keyframes colorChange{
+    100% {
+        fill: #FF0000;
+    }
+}
+
 .hljs {
   display: block;
   overflow-x: auto;

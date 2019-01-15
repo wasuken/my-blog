@@ -28,7 +28,7 @@ class Home extends React.Component{
 		let cards = this.state.reports.map((report,i)=>{
 			return <Card key={i} {...report}></Card>;
 		});
-		cards.unshift(<WordCloudBox />);
+		//cards.unshift(<WordCloudBox />);
 		return (
 			<div>
 			  <ul>

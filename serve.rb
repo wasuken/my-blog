@@ -14,7 +14,6 @@ require 'json'
 require 'open-uri'
 require './lib/nippo'
 
-
 DB = Sequel.connect("sqlite://./myblog.db")
 CONFIG_PASS = ParseConfig.new("./.pass")
 CONFIG = ParseConfig.new("post-config")
@@ -85,22 +84,36 @@ class MyBlog < Sinatra::Base
     end
     return result
   end
+  # ブログ内容からタグを生成して出力する。
+  get "/api/v1/tag/:tag" do
+    DB[:my_blog].where(Sequel.like(:body, "%#{params['tag']}%"))
+      .select(:title,:blog_id).all.to_json
+  end
+  get "/api/v1/tags" do
+    parse(get_from_api,40).to_h.keys.to_json
+  end
   # wordcloud用
   get "/api/v1/wordcloud/:n" do
     n = params[:n] || "20"
-    parse(get_from_api,n.to_i).to_h.map{|k,v| {"text" => k,"value" => v}}.to_json
+    parse(get_from_api,n.to_i).to_h
+      .map{|k,v| {"text" => k,"value" => v}}.to_json
+  end
+  # 記事を削除する。現状でこちらは使えない。
+  delete "/api/v1/:id" do
+    params = request.params
+    return if !isPass(params[:pass])
+    p "deleted #{DB[:my_blog].where(blog_id: params[:id]).all.first}"
+    p DB[:my_blog].where(blog_id: params[:id]).delete
   end
   # 記事を削除する。
-  delete "/api/v1/:id" do
-    return if !isPass(params[:pass])
-    p params[:id]
+  post "/api/v1/delete/:id" do
+    return if !isPass(request.params['pass'])
     p "deleted #{DB[:my_blog].where(blog_id: params[:id]).all.first}"
     p DB[:my_blog].where(blog_id: params[:id]).delete
   end
   # 記事を登録する。
-  post "/api/v1" do
+  post "/api/v1/post" do
     params = request.params
-    p request
     title,body,tags_string,pass = params["title"],params["body"],params["tags_string"],params["pass"]
     return if !isPass(pass)
 
@@ -111,7 +124,7 @@ class MyBlog < Sinatra::Base
     DB[:my_blog].insert(blog_id: id, title: title, body: mdToHtml(body), tags_string: tags_string)
   end
   # 記事を更新する。
-  put "/api/v1/:id" do
+  put "/api/v1/put/:id" do
     params = request.params
     return if !isPass(params[:pass])
     id,title,body,tags_string = params["id"],params["title"],params["body"],params["tags_string"]

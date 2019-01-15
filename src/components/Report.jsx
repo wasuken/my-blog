@@ -29,7 +29,7 @@ const Tags = styled.h3`
 class Report extends React.Component {
 	constructor(){
 		super();
-		const id = location.pathname.substring(1)
+		const id = location.pathname.substring(1).split('/').slice(-1)[0]
 		let that = this;
 		this.state = {
 			title: "",

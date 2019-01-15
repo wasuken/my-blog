@@ -11,12 +11,20 @@ DIRPATH=CONFIG["default_path"]
 HOST=CONFIG["host"]
 
 def delete(id)
-  uri = URI.parse("#{HOST}/api/v1/#{id}?pass=#{enc(PASSCONFIG["pass"])}")
-  req = Net::HTTP::Delete.new(uri.request_uri)
-  http = Net::HTTP.new(uri.host, uri.port)
-  res = http.request(req)
+  # uri = URI.parse("#{HOST}/api/v1/#{id}")
+  # req = Net::HTTP::Delete.new(uri.request_uri)
+  # http = Net::HTTP.new(uri.host, uri.port)
+  # req.body = URI.parse("pass=#{enc(PASSCONFIG["pass"])}")
+  # res = http.request(req)
 
-  puts res.body
+  # puts res.body
+  begin
+    res = Net::HTTP.post_form(URI.parse("#{HOST}/api/v1/delete/#{id}"),
+                              {'pass' => enc(PASSCONFIG["pass"])})
+    puts res.body
+  rescue => e
+    p e.message
+  end
 end
 
 def enc(data)
@@ -36,25 +44,34 @@ def post(fpath)
     title=File.basename(file.path,".md")
     body = file.read
   end
-  res = Net::HTTP.post_form(URI.parse("#{HOST}/api/v1"),
-                            {'title' => title,
-                             'body' => body,
-                             'tags_string' => "",
-                             'pass' => pass})
-  puts res.body
+  begin
+    res = Net::HTTP.post_form(URI.parse("#{HOST}/api/v1/post"),
+                              {'title' => title,
+                               'body' => body,
+                               'tags_string' => "",
+                               'pass' => pass})
+    puts res.body
+  rescue => e
+    p e.message
+  end
 end
 
 case ARGV[0]
 when "post" then
-  fpath = Dir.glob("#{DIRPATH}*").sort_by{|fp|
+  fpaths = Dir.glob("#{DIRPATH}*").sort_by do |fp|
     t=Time.new
     File.open(fp){|f| t=f.ctime}
     t
-  }.last
-  if ARGV[1]
+  end
+
+  if ARGV[1] == "all"
+    fpaths.each do |fp|
+      post fp
+    end
+  elsif ARGV[1]
     post ARGV[1]
   else
-    post fpath
+    post fpaths.last
   end
 
 when "delete" then

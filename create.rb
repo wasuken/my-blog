@@ -9,3 +9,8 @@ DB.create_table!(:my_blog) do
   String :body
   String :tags_string
 end
+
+DB.create_table!(:profile) do
+  primary_key :id
+  String :content
+end
