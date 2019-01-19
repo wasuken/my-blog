@@ -25,7 +25,7 @@ class MyBlog < Sinatra::Base
     'Boom'
   end
   def get_from_api
-    uri = URI.parse("#{CONFIG["host"]}/api/v1")
+    uri = URI.parse("#{request.host}/api/v1")
 
     result = Net::HTTP.get(uri)
     json = JSON.parse(result)
@@ -97,6 +97,7 @@ class MyBlog < Sinatra::Base
   end
   not_found do
     'This is nowhere to be found.'
+    redirect '/', 303
   end
   error do
     'error'
@@ -181,4 +182,4 @@ class MyBlog < Sinatra::Base
 end
 
 
-MyBlog.run! port: 80, bind: '0.0.0.0'
+# MyBlog.run! port: 80, bind: '0.0.0.0'
