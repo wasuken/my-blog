@@ -29,7 +29,7 @@ class Tag extends React.Component {
 		this.state = {
 			tags: []
 		};
-		fetch("http://localhost:4567/api/v1/" + tag).then((resp)=>{
+		fetch("/api/v1/" + tag).then((resp)=>{
 			return resp.json();
 		}).then((json)=>{
 			that.setState({

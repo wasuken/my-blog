@@ -11,7 +11,7 @@ class TagList extends React.Component {
 			tags: []
 		}
 		let that = this;
-		fetch("http://localhost:4567/api/v1/tags").then((resp)=>{
+		fetch("/api/v1/tags").then((resp)=>{
 			return resp.json();
 		}).then((json)=>{
 			that.setState({
