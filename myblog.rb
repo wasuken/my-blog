@@ -44,6 +44,7 @@ class MyBlog < Sinatra::Base
     nippo_result["until #{n.date_str}"] = nippo_week if nippo_week.count > 0
     nippo_result
   end
+
   def parse(nippo_result,n=20)
     nippo_wakatis = nippo_result.map{|k,v| v.map(&:wakati_content_size_filter)}
                       .flatten.select{|v| v.match(/^[^ -~｡-ﾟ]*$|[A-Za-z0-9]/)}
@@ -101,7 +102,12 @@ class MyBlog < Sinatra::Base
     'error'
   end
   get "/api/v1/tags" do
-    parse(get_from_api,40).to_h.keys.to_json
+    # parse(get_from_api,40).to_h.keys.to_json
+    DB[:my_blog].select(:tags_string)
+                     .all
+                     .map {|k, v| v.split(' ')}
+                     .flatten
+                     .uniq
   end
   # wordcloud用
   get "/api/v1/wordcloud/:n" do
@@ -121,6 +127,9 @@ class MyBlog < Sinatra::Base
     return if !isPass(request.params['pass'])
     p "deleted #{DB[:my_blog].where(blog_id: params[:id]).all.first}"
     p DB[:my_blog].where(blog_id: params[:id]).delete
+  end
+  def create_tags_string(body)
+
   end
   # 記事を登録する。
   post "/api/v1/post" do
@@ -172,4 +181,4 @@ class MyBlog < Sinatra::Base
 end
 
 
-# MyBlog.run! port: 80, bind: '0.0.0.0'
+MyBlog.run! port: 80, bind: '0.0.0.0'

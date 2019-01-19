@@ -4,11 +4,14 @@ require 'date'
 require 'parseconfig'
 require 'uri'
 require 'openssl'
+require 'sequel'
+require './lib/nippo'
 
 CONFIG=ParseConfig.new('./post-config')
 PASSCONFIG=ParseConfig.new('./.pass')
 DIRPATH=CONFIG["default_path"]
 HOST=CONFIG["host"]
+DB = Sequel.connect("sqlite://./myblog.db")
 
 def delete(id)
   # uri = URI.parse("#{HOST}/api/v1/#{id}")
@@ -24,6 +27,14 @@ def delete(id)
     puts res.body
   rescue => e
     p e.message
+  end
+end
+
+def set_tags_string
+  DB[:my_blog].select(:title, :body, :id)
+      .all.each do |rec|
+    tags_string = Nippo.new(rec[:title], rec[:body]).wakati_content_size_filter.uniq.join(' ')
+    p DB[:my_blog].where(id: rec[:id]).update(tags_string: tags_string)
   end
 end
 
@@ -57,6 +68,8 @@ def post(fpath)
 end
 
 case ARGV[0]
+when "createTag" then
+  set_tags_string
 when "post" then
   fpaths = Dir.glob("#{DIRPATH}*").sort_by do |fp|
     t=Time.new

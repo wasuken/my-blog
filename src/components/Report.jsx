@@ -49,10 +49,12 @@ class Report extends React.Component {
 			});
 	}
 	render(){
+		let tag_links = this.state.tags_string.split(' ')
+			.map((tag,i) => <Link key={i} to={"/tag/" + tag}>{tag}</Link>);
 		return (
 			<div>
 			  <H2>{this.state.title}</H2>
-			  <Tags>{this.state.tags_string}</Tags>
+			  <Tags>{tag_links}</Tags>
 			  <Body>
 				<Highlight innerHTML={true}>
 				  {this.state.body}
