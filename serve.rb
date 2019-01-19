@@ -89,6 +89,12 @@ class MyBlog < Sinatra::Base
     DB[:my_blog].where(Sequel.like(:body, "%#{params['tag']}%"))
       .select(:title,:blog_id).all.to_json
   end
+  not_found do
+    'This is nowhere to be found.'
+  end
+  error do
+    'error'
+  end
   get "/api/v1/tags" do
     parse(get_from_api,40).to_h.keys.to_json
   end

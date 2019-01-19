@@ -67,6 +67,7 @@ when "post" then
   if ARGV[1] == "all"
     fpaths.each do |fp|
       post fp
+      sleep(10)
     end
   elsif ARGV[1]
     post ARGV[1]
