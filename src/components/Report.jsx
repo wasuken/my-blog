@@ -36,7 +36,7 @@ class Report extends React.Component {
 			body: "",
 			tags_string: ""
 		};
-		fetch("http://os3-369-17744.vs.sakura.ne.jp/api/v1/" + id)
+		fetch("/api/v1/" + id)
 			.then((resp) => {
 				return resp.json();
 			})

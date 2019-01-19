@@ -1,8 +1,9 @@
 require "sinatra"
 
 require './myblog.rb'
-
+require 'parseconfig'
+CONFIG = ParseConfig.new('./post-config')
 set :environment, :production
 
-# MyBlog.run! port: 80, bind: '0.0.0.0'
+# MyBlog.run! port: 80
 run MyBlog

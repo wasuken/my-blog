@@ -60,7 +60,7 @@ class New extends React.Component {
 		let title = document.getElementById("title").value;
 		let tags_string = document.getElementById("tags_string").value;
 		let body = document.getElementById("body").value;
-		fetch("http://os3-369-17744.vs.sakura.ne.jp/api/v1",{
+		fetch("/api/v1",{
 			method: "POST",
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",

@@ -43,12 +43,10 @@ ReactDOM.render(
 		<div>
 		  <Ul>
 			<Li><Link to="/">Home</Link></Li>
-			<Li><Link to="/tags">Tags</Link></Li>
 			<Li><a href="https://twitter.com/black_box_rx?lang=ja">Twitter</a></Li>
 			<Li><a href="https://github.com/wasuken">Github</a></Li>
 		  </Ul>
 		  <Route exact path="/" component={Home} />
-		  <Route path="/tags" component={TagList} />
 		  <Route path="/tag/:tag" component={Tag} />
 		  <Route path="/report/:id" component={Report} />
 		</div>

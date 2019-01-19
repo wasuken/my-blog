@@ -17,7 +17,7 @@ class WordCloudBox extends React.Component{
 			word: "",
 			event: false
 		};
-		fetch("http://os3-369-17744.vs.sakura.ne.jp/api/v1/wordcloud/30")
+		fetch("/api/v1/wordcloud/30")
 			.then((resp) => {
 				return resp.json();
 			})
