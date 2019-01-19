@@ -13,12 +13,17 @@ require 'net/http'
 require 'json'
 require 'open-uri'
 require './lib/nippo'
+require 'logger'
 
 DB = Sequel.connect("sqlite://./myblog.db")
 CONFIG_PASS = ParseConfig.new("./.pass")
 CONFIG = ParseConfig.new("post-config")
 class MyBlog < Sinatra::Base
+  use Rack::CommonLogger, Logger.new('myapp.log')
   enable :method_override
+  error 400..510 do
+    'Boom'
+  end
   def get_from_api
     uri = URI.parse("#{CONFIG["host"]}/api/v1")
 
@@ -132,7 +137,7 @@ class MyBlog < Sinatra::Base
   end
   # 記事一覧を返す
   get "/api/v1" do
-    DB[:my_blog].all.to_json
+    DB[:my_blog].all.reverse.to_json
   end
   # 記事を返す。
   get "/api/v1/:id" do
@@ -160,4 +165,5 @@ class MyBlog < Sinatra::Base
   end
 end
 
-MyBlog.run! :host => 'localhost', :port => 4567
+
+# MyBlog.run! port: 80, bind: '0.0.0.0'

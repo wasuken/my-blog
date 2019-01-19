@@ -16,7 +16,7 @@ class Home extends React.Component{
 			reports: []
 		}
 		let that = this;
-		fetch("http://localhost:4567/api/v1").then((resp)=>{
+		fetch("http://os3-369-17744.vs.sakura.ne.jp/api/v1").then((resp)=>{
 			return resp.json();
 		}).then((json)=>{
 			that.setState({
