@@ -26,6 +26,9 @@ const Tags = styled.h3`
   border: dashed 2px white;
   padding: 0.2em 0.5em;
 `;
+const TagLink = styled.a`
+  margin 10px;
+`;
 class Report extends React.Component {
 	constructor(){
 		super();
@@ -50,7 +53,7 @@ class Report extends React.Component {
 	}
 	render(){
 		let tag_links = this.state.tags_string.split(' ')
-			.map((tag,i) => <Link key={i} to={"/tag/" + tag}>{tag}</Link>);
+			.map((tag,i) => <TagLink><Link key={i} to={"/tag/" + tag}>{tag}</Link></TagLink>);
 		return (
 			<div>
 			  <H2>{this.state.title}</H2>

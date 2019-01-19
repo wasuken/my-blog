@@ -12,44 +12,46 @@ import styled from "styled-components"
 
 
 const Ul = styled.ul`
-  padding: 0;
-  position: relative;
-  background-color: #2d8fdd;
+	padding: 0;
+	position: relative;
+	background-color: #2d8fdd;
 `;
 const Li = styled.li`
-  color: #2d8fdd;
-  border-left: solid 6px #2d8fdd;
-  display: table-cell;
-  background: #f1f8ff;
-  margin-bottom: 3px;
-  line-height: 1.5;
-  padding: 0.5em;
-  list-style-type: none!important;
-  &:hover {
+	n  color: #2d8fdd;
+	border-left: solid 6px #2d8fdd;
+	display: table-cell;
+	background: #f1f8ff;
+	margin-bottom: 3px;
+	line-height: 1.5;
+	padding: 0.5em;
+	list-style-type: none!important;
+	&:hover {
     background: #668ad8;
     color: #FFF;
-  }
+	}
 `;
 
 const LeftCol = styled.div`
-  float:left;
+	float:left;
 `;
 const RightCol = styled.div`
-  float:right;
+	float:right;
 `;
 ReactDOM.render(
 	<div>
-	  <BrowserRouter>
-		<div>
-		  <Ul>
-			<Li><Link to="/">Home</Link></Li>
-			<Li><a href="https://twitter.com/black_box_rx?lang=ja">Twitter</a></Li>
-			<Li><a href="https://github.com/wasuken">Github</a></Li>
-		  </Ul>
-		  <Route exact path="/" component={Home} />
-		  <Route path="/tag/:tag" component={Tag} />
-		  <Route path="/report/:id" component={Report} />
-		</div>
-	  </BrowserRouter>
+		<BrowserRouter>
+			<div>
+				<Ul>
+					<Li><Link to="/">Home</Link></Li>
+					<Li><Link to="/tags">Tags</Link></Li>
+					<Li><a href="https://twitter.com/black_box_rx?lang=ja">Twitter</a></Li>
+					<Li><a href="https://github.com/wasuken">Github</a></Li>
+				</Ul>
+				<Route exact path="/" component={Home} />
+				<Route path="/tag/:tag" component={Tag} />
+				<Route path="/tags" component={TagList} />
+				<Route path="/report/:id" component={Report} />
+			</div>
+		</BrowserRouter>
 	</div>,
 	document.getElementById("app"));

@@ -21,14 +21,14 @@ class TagList extends React.Component {
 	}
 	render(){
 		let tags = this.state.tags.map((v,k) =>{
-			return <p><Link key={k} to={'/tag/' + v}>{v}</Link></p>;
+			return <p><Link key={k} to={'/tag/' + v['value']}>{v['value'] + ": " + v['count']}</Link></p>;
 		})
 		return (
 			<div>
-			  {tags}
-			  <p>
-				<Link to="/">Home</Link>
-			  </p>
+				{tags}
+				<p>
+					<Link to="/">Home</Link>
+				</p>
 			</div>
 		)
 	}

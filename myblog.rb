@@ -103,12 +103,12 @@ class MyBlog < Sinatra::Base
     'error'
   end
   get "/api/v1/tags" do
-    # parse(get_from_api,40).to_h.keys.to_json
-    DB[:my_blog].select(:tags_string)
+    all = DB[:my_blog].select(:tags_string)
                      .all
-                     .map {|k, v| v.split(' ')}
+                     .map {|v| v[:tags_string].split(' ')}
                      .flatten
-                     .uniq
+    all.uniq.sort_by{|v| all.count{|s| s == v}}
+      .reverse.map{|v| {value: v,count: all.count{|s| s == v}}}.to_json
   end
   # wordcloud用
   get "/api/v1/wordcloud/:n" do
@@ -129,13 +129,14 @@ class MyBlog < Sinatra::Base
     p "deleted #{DB[:my_blog].where(blog_id: params[:id]).all.first}"
     p DB[:my_blog].where(blog_id: params[:id]).delete
   end
-  def create_tags_string(body)
-
+  def create_tags_string(title, body)
+    Nippo.new(title, body).wakati_content_size_filter.uniq.join(' ')
   end
   # 記事を登録する。
   post "/api/v1/post" do
     params = request.params
-    title,body,tags_string,pass = params["title"],params["body"],params["tags_string"],params["pass"]
+    title,body,tags_string,pass =
+                           params["title"],params["body"],create_tags_string(params["title"],params["body"]),params["pass"]
     return if !isPass(pass)
 
     str = (title || "") + (body || "") + (tags_string || "") + Date.today.strftime("%Y/%m/%d %H:%M:%S")
