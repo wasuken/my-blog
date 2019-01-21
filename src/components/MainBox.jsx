@@ -8,8 +8,9 @@ const LeftColumn = styled.div`
 	width: 70%;
 `;
 const RightColumn = styled.div`
+	margin-right: 30px;
 	float: right;
-	width: 30%;
+	width: 20%;
 `;
 const RightBox = styled.div`
 
