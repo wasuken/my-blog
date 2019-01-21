@@ -31,10 +31,11 @@ const Li = styled.li`
 	}
 `;
 
+
+
 const homeMainBox = () => (
 	<MainBox lefts={[<Home />]}
-			 rights={[<ProfileBox myname="重荷" profileImg="img/ninja.jpeg" desc="" />,
-					  <WordCloudBox />]} />
+			 rights={[<ProfileBox myname="重荷" profileImg="img/ninja.jpeg"/>]} />
 );
 
 ReactDOM.render(

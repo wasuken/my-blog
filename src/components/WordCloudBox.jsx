@@ -32,7 +32,7 @@ class WordCloudBox extends React.Component{
 	handleClick(word){
 		this.setState({
 			data: this.state.data,
-			word: word["value"],
+			word: word.text,
 			event: true
 		})
 	}
@@ -52,8 +52,8 @@ class WordCloudBox extends React.Component{
 			  data={this.state.data}
 			  fontSizeMapper={fontSizeMapper}
 			  rotate={rotate}
-			  width={600}
-			  height={250}
+			  width={200}
+			  height={200}
 			  onWordClick={this.handleClick.bind(this)}
 			  />
 		)
