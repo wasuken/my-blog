@@ -24,7 +24,6 @@ class Tag extends React.Component {
 	constructor(){
 		super();
 		let tag =  location.pathname.substring(1)
-		console.log(tag);
 		let that = this;
 		this.state = {
 			tags: []
@@ -41,7 +40,6 @@ class Tag extends React.Component {
 		let cards = this.state.tags.map((blog,i)=>{
 			return <Card key={i} {...blog}></Card>;
 		});
-		console.log(cards);
 		return (
 			<div>
 			  {cards}

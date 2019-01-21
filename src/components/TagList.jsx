@@ -4,6 +4,10 @@ import styled from "styled-components"
 import { Link, Redirect } from "react-router-dom"
 import hljs from 'highlight.js/lib/highlight';
 
+const TagLink = styled.a`
+  margin 10px;
+`;
+
 class TagList extends React.Component {
 	constructor(){
 		super();
@@ -21,7 +25,7 @@ class TagList extends React.Component {
 	}
 	render(){
 		let tags = this.state.tags.map((v,k) =>{
-			return <p><Link key={k} to={'/tag/' + v['value']}>{v['value'] + ": " + v['count']}</Link></p>;
+			return <TagLink><Link key={k} to={'/tag/' + v['value']}>{v['value'] + ": " + v['count']}</Link></TagLink>;
 		})
 		return (
 			<div>
