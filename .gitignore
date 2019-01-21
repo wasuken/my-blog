@@ -12,3 +12,5 @@ post-config
 *.log
 log/
 tmp/
+.DS_Store
+*.txt

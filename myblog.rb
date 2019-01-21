@@ -117,12 +117,12 @@ class MyBlog < Sinatra::Base
       .map{|k,v| {"text" => k,"value" => v}}.to_json
   end
   # 記事を削除する。現状でこちらは使えない。
-  delete "/api/v1/:id" do
-    params = request.params
-    return if !isPass(params[:pass])
-    p "deleted #{DB[:my_blog].where(blog_id: params[:id]).all.first}"
-    p DB[:my_blog].where(blog_id: params[:id]).delete
-  end
+  # delete "/api/v1/report/:id" do
+  #   params = request.params
+  #   return if !isPass(params[:pass])
+  #   p "deleted #{DB[:my_blog].where(blog_id: params[:id]).all.first}"
+  #   p DB[:my_blog].where(blog_id: params[:id]).delete
+  # end
   # 記事を削除する。
   post "/api/v1/delete/:id" do
     return if !isPass(request.params['pass'])
@@ -157,10 +157,15 @@ class MyBlog < Sinatra::Base
     DB[:my_blog].all.reverse.to_json
   end
   # 記事を返す。
-  get "/api/v1/:id" do
+  get "/api/v1/report/:id" do
     DB[:my_blog].first(:blog_id => params[:id]).to_json
   end
-
+  get "/api/v1/profile" do
+    r = params["r"]
+    contents = DB[:profile].select(:content).all.map{|v| v[:content]}
+    p contents
+    return (r ? contents.shuffle.to_json : contents.to_json)
+  end
   # シングルページアプリケーション目指してるので消すかも。
   # 記事の一覧を見ることができるページを返す。
   get "/" do
@@ -168,7 +173,7 @@ class MyBlog < Sinatra::Base
     erb :index
   end
   # 記事を見ることができるページを返す。
-  get "/:id" do
+  get "/report/:id" do
     p params[:id]
   end
 
@@ -180,7 +185,8 @@ class MyBlog < Sinatra::Base
   get "/edit" do
 
   end
+
 end
 
 
-# MyBlog.run! port: 80, bind: '0.0.0.0'
+MyBlog.run! port: 80, bind: '0.0.0.0'

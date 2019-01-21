@@ -7,9 +7,9 @@ import TagList from "./components/TagList"
 import Tag from "./components/Tag"
 import WordCloudBox from "./components/WordCloudBox"
 import ProfileBox from "./components/ProfileBox"
+import MainBox from "./components/MainBox"
 import { BrowserRouter, Route, Link } from "react-router-dom"
 import styled from "styled-components"
-
 
 const Ul = styled.ul`
 	padding: 0;
@@ -31,12 +31,12 @@ const Li = styled.li`
 	}
 `;
 
-const LeftCol = styled.div`
-	float:left;
-`;
-const RightCol = styled.div`
-	float:right;
-`;
+const homeMainBox = () => (
+	<MainBox lefts={[<Home />]}
+			 rights={[<ProfileBox myname="重荷" profileImg="img/ninja.jpeg" desc="" />,
+					  <WordCloudBox />]} />
+);
+
 ReactDOM.render(
 	<div>
 		<BrowserRouter>
@@ -47,7 +47,7 @@ ReactDOM.render(
 					<Li><a href="https://twitter.com/black_box_rx?lang=ja">Twitter</a></Li>
 					<Li><a href="https://github.com/wasuken">Github</a></Li>
 				</Ul>
-				<Route exact path="/" component={Home} />
+				<Route exact path="/" component={homeMainBox} />
 				<Route path="/tag/:tag" component={Tag} />
 				<Route path="/tags" component={TagList} />
 				<Route path="/report/:id" component={Report} />

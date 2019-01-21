@@ -13,17 +13,17 @@ class WordCloudBox extends React.Component{
 		super();
 		let that = this;
 		this.state = {
-			data: [{text:"aa",value:2}],
+			data: [{text:"",value:2}],
 			word: "",
 			event: false
 		};
-		fetch("/api/v1/wordcloud/30")
+		fetch("/api/v1/tags")
 			.then((resp) => {
 				return resp.json();
 			})
 			.then((json) => {
 				that.setState({
-					data: json,
+					data: json.map((v) => ({text: v.value,value: v.count})).slice(0,20),
 					word: "",
 					event: false
 				});
@@ -32,7 +32,7 @@ class WordCloudBox extends React.Component{
 	handleClick(word){
 		this.setState({
 			data: this.state.data,
-			word: word["text"],
+			word: word["value"],
 			event: true
 		})
 	}

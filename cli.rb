@@ -67,6 +67,18 @@ def post(fpath)
   end
 end
 
+def insert_profile_continuing_in_file(filepath)
+  s = ''
+  File.open(filepath) do |f|
+    s = f.read
+  end
+  # これで固定。
+  s.split('### ###').map do |v|
+    DB[:profile].insert(content: v.gsub(/\n/,""))
+  end
+
+end
+
 case ARGV[0]
 when "createTag" then
   set_tags_string
@@ -90,6 +102,8 @@ when "post" then
 
 when "delete" then
   delete(ARGV[1])
+when "profile"
+  insert_profile_continuing_in_file(ARGV[1])
 else
   p "not found"
 end
