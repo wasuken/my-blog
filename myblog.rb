@@ -189,4 +189,4 @@ class MyBlog < Sinatra::Base
 end
 
 
-MyBlog.run! port: 80, bind: '0.0.0.0'
+# MyBlog.run! port: 80, bind: '0.0.0.0'
