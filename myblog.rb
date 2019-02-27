@@ -210,3 +210,4 @@ class MyBlog < Sinatra::Base
   # end
 
 end
+# MyBlog.run! port: 80, bind: '0.0.0.0'

@@ -42,15 +42,15 @@ const homeMainBox = () => (
 );
 const reportMainBox = () => (
 	<MainBox lefts={[<Report />]}
-			 rights={[<ProfileBox myname="重荷" profileImg="/img/ninja.jpeg"/>]} />
+			 rights={[<ProfileBox myname="wasu" profileImg="/img/ninja.jpeg"/>]} />
 );
 const tagMainBox = () => (
 	<MainBox lefts={[<Tag />]}
-			 rights={[<ProfileBox myname="重荷" profileImg="/img/ninja.jpeg"/>]} />
+			 rights={[<ProfileBox myname="wasu" profileImg="/img/ninja.jpeg"/>]} />
 );
 const tagListMainBox = () => (
 	<MainBox lefts={[<TagList />]}
-			 rights={[<ProfileBox myname="重荷" profileImg="/img/ninja.jpeg"/>]} />
+			 rights={[<ProfileBox myname="wasu" profileImg="/img/ninja.jpeg"/>]} />
 );
 
 ReactDOM.render(
@@ -60,17 +60,12 @@ ReactDOM.render(
 				<Ul>
 					<Li><Link to="/">Home</Link></Li>
 					<Li><Link to="/tags">Tags</Link></Li>
-					<Li>
-						<a href="https://twitter.com/black_box_rx?lang=ja">
-							Twitter
-						</a>
-					</Li>
 					<Li><a href="https://github.com/wasuken">Github</a></Li>
 				</Ul>
 				<Route exact path="/" component={homeMainBox} />
-				<Route path="/tag/:tag" component={tagMainBox} />
-				<Route path="/tags" component={tagListMainBox} />
-				<Route path="/report/:id" component={reportMainBox} />
+				<Route exact path="/tag/:tag" component={tagMainBox} />
+				<Route exact path="/tags" component={tagListMainBox} />
+				<Route exact path="/report/:id" component={reportMainBox} />
 			</div>
 		</BrowserRouter>
 	</div>,
