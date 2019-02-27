@@ -13,10 +13,10 @@ const RightColumn = styled.div`
 	width: 20%;
 `;
 const RightBox = styled.div`
-
+	height: 100%;
 `;
 const LeftBox = styled.div`
-
+	height: 100%;
 `;
 
 class MainBox extends React.Component{

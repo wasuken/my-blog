@@ -8,6 +8,7 @@ import Tag from "./components/Tag"
 import WordCloudBox from "./components/WordCloudBox"
 import ProfileBox from "./components/ProfileBox"
 import MainBox from "./components/MainBox"
+import AccessGraph from "./components/AccessGraph"
 import { BrowserRouter, Route, Link } from "react-router-dom"
 import styled from "styled-components"
 
@@ -31,9 +32,13 @@ const Li = styled.li`
 	}
 `;
 
+const defaultComponents = () => (
+	[<ProfileBox myname="重荷" profileImg="/img/ninja.jpeg"/>,
+	 , <AccessGraph />]
+)
 const homeMainBox = () => (
 	<MainBox lefts={[<Home />]}
-			 rights={[<ProfileBox myname="重荷" profileImg="/img/ninja.jpeg"/>]} />
+			 rights={defaultComponents()} />
 );
 const reportMainBox = () => (
 	<MainBox lefts={[<Report />]}

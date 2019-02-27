@@ -15,15 +15,31 @@ require 'open-uri'
 require './lib/nippo'
 require 'logger'
 
+class Log
+  attr_accessor :ip, :created_at
+  def initialize(line)
+    lines = line.split(' ')
+    @ip = lines[0]
+    p lines[4] + ' ' + lines[5]
+    @created_at = DateTime.parse(lines[4] + ' ' + lines[5])
+  end
+  def equal_created_date(str_date)
+    target = Date.parse(str_date)
+    return @created_at.year == target.year &&
+      @created_at.month == target.month &&
+      @created_at.day == target.day
+  end
+end
+
 DB = Sequel.connect("sqlite://./myblog.db")
 CONFIG_PASS = ParseConfig.new("./.pass")
 CONFIG = ParseConfig.new("post-config")
 class MyBlog < Sinatra::Base
   use Rack::CommonLogger, Logger.new('myapp.log')
   enable :method_override
-  error 400..510 do
-    'Boom'
-  end
+  # error 400..510 do
+  #   'Boom'
+  # end
   def get_from_api
     uri = URI.parse("#{request.host}/api/v1")
 
@@ -90,17 +106,24 @@ class MyBlog < Sinatra::Base
     end
     return result
   end
+  def get_log_classes
+    log_lines = []
+    File.open('./myapp.log') do |f|
+      f.each_line{|line|
+        log_lines.push Log.new(line) if !line.match(/127.0.0.1/)
+      }
+    end
+    p log_lines.count
+    log_lines
+  end
   # ブログ内容からタグを生成して出力する。
   get "/api/v1/tag/:tag" do
     DB[:my_blog].where(Sequel.like(:body, "%#{params['tag']}%"))
       .select(:title,:blog_id).all.to_json
   end
-  not_found do
-    'This is nowhere to be found.'
-    redirect '/', 303
-  end
-  error do
-    'error'
+  get "/api/v1/graph/access" do
+    maps = get_log_classes.group_by{|cls| "#{cls.created_at.year.to_s}/#{cls.created_at.month.to_s}"}
+    maps.keys.map{ |k| {"month" => maps[k][0].created_at.month, "value" => maps[k].uniq{ |cls| cls.ip }.count} }.to_json
   end
   get "/api/v1/tags" do
     all = DB[:my_blog].select(:tags_string)
@@ -178,15 +201,12 @@ class MyBlog < Sinatra::Base
   end
 
   # 記事を登録するページを返す。
-  get "/new" do
+  # get "/new" do
 
-  end
-  # 記事を更新するページを返す。
-  get "/edit" do
+  # end
+  # # 記事を更新するページを返す。
+  # get "/edit" do
 
-  end
+  # end
 
 end
-
-
-MyBlog.run! port: 80, bind: '0.0.0.0'

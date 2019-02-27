@@ -5,6 +5,11 @@ require 'parseconfig'
 require 'uri'
 require 'openssl'
 require 'sequel'
+require 'mastodon'
+require 'oauth2'
+require 'json'
+require 'uri'
+require 'net/https'
 require './lib/nippo'
 
 CONFIG=ParseConfig.new('./post-config')
@@ -67,6 +72,19 @@ def post(fpath)
   end
 end
 
+def post_to_mastodon(title,url)
+  mastodon_host = 'https://mastodon.social'
+  mstdn = Mastodon::REST::Client.new(base_url: mastodon_host, bearer_token: CONFIG['MASTODON_ACCESS_TOKEN'])
+  mstdn.create_status("#{url}")
+end
+
+def get_url_and_title(url)
+  uri = URI.parse("#{url}/api/v1")
+  json = Net::HTTP.get(uri)
+  result = JSON.parse(json)
+  [result[0]['title'], url + '/report/' + result[0]['blog_id']]
+end
+
 def insert_profile_continuing_in_file(filepath)
   s = ''
   File.open(filepath) do |f|
@@ -99,7 +117,9 @@ when "post" then
   else
     post fpaths.last
   end
-
+when "postToMastodon" then
+  title, url = get_url_and_title(CONFIG["host"])
+  post_to_mastodon(title, url)
 when "delete" then
   delete(ARGV[1])
 when "profile"
